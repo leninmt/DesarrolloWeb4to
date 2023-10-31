@@ -8,14 +8,14 @@ export class CategoryEntity {
     @CreateDateColumn({
         name: 'create_at',
         type: 'timestamp',
-        default: () => 'CURRENTE_TIMESTAMP',
+        default: () => 'Current_timestamp',
     })
     createAt: Date;
 
     @UpdateDateColumn({
         name: 'update_at',
         type: 'timestamp',
-        default: () => 'CURRENTE_TIMESTAMP',
+        default: () => 'Current_timestamp',
 
     })
     updateAt: Date;
