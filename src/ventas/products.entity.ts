@@ -1,7 +1,9 @@
-import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity,PrimaryGeneratedColumn, UpdateDateColumn,ManyToOne } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, CreateDateColumn, DeleteDateColumn, Entity,PrimaryGeneratedColumn, UpdateDateColumn,ManyToOne, OneToMany } from "typeorm";
 import { CategoryEntity } from "./category.entity";
+import { SaleEntity } from "./sales.entity";
+import { SupplierEntity } from "./suppliers.entity";
 
-@Entity('products', {schema: 'ventas'})
+@Entity('products', {schema: 'sales'})
 export class ProductEntity{
     @PrimaryGeneratedColumn('uuid')
     id:String;
@@ -29,8 +31,18 @@ export class ProductEntity{
     deleteAt:Date;
     
 //-----Relaciones--------
-@ManyToOne(()=>CategoryEntity,category=>category.product)
-category:CategoryEntity
+
+// @ManyToOne(()=>CategoryEntity,category=>category.product)
+// category:CategoryEntity
+
+
+@OneToMany(() => SaleEntity, (sale) => sale.product)
+sale: SaleEntity;
+@ManyToOne(() => SupplierEntity, (supplier) => supplier.product)
+supplier: SupplierEntity;
+@ManyToOne(() => CategoryEntity, (category) => category.product)
+category: CategoryEntity;
+
 
 //-----Fin Relaciones--------
 
@@ -40,12 +52,15 @@ category:CategoryEntity
         comment:'Product Tittle'
     })
     tittle:string;
+
     @Column('numeric', {
         name: 'price',
         nullable: false,
         comment: 'product price'
     })
     price:number;
+
+
     @Column('varchar', {
         name: 'description',
         nullable: true,
